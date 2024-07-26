@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { footer, pdf } from "../Utils/pdfTemplate.js"; // Import your HTML template function
+import { pdf } from "../Utils/pdfTemplate.js"; // Import your HTML template function
 
 const generatePdf = async (req, res) => {
   try {
