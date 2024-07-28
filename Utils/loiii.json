@@ -1,0 +1,339 @@
+{
+  "uuid": "7ad66724-32fe-47e6-b1d3-42eb5ac68f3c",
+  "labBranch": {
+    "uuid": "98af2baa-5e6b-4e03-9d26-e609d8b0b157",
+    "lab": {
+      "uuid": "1be9bbbc-565d-4be7-b870-1f72a3da3024",
+      "name": "KireetLab",
+      "email": "kireet@gmail.com",
+      "mobile": "89898989",
+      "city": null,
+      "state": "Uttar Pradesh",
+      "pin_code": "201301",
+      "locality": null,
+      "address": "noida"
+    },
+    "name": "KireetLab",
+    "mobile": null,
+    "address": null,
+    "message": null
+  },
+  "patient_info": {
+    "id": 1000001,
+    "uuid": "f12a132a-684c-442c-a425-d7be73f0f9eb",
+    "patient": {
+      "uuid": "81012a4e-3962-4c56-9ded-2d015c00def0",
+      "lab": {
+        "uuid": "1be9bbbc-565d-4be7-b870-1f72a3da3024",
+        "name": "KireetLab",
+        "email": "kireet@gmail.com",
+        "mobile": "89898989",
+        "city": null,
+        "state": "Uttar Pradesh",
+        "pin_code": "201301",
+        "locality": null,
+        "address": "noida"
+      },
+      "labBranch": {
+        "uuid": "98af2baa-5e6b-4e03-9d26-e609d8b0b157",
+        "lab": {
+          "uuid": "1be9bbbc-565d-4be7-b870-1f72a3da3024",
+          "name": "KireetLab",
+          "email": "kireet@gmail.com",
+          "mobile": "89898989",
+          "city": null,
+          "state": "Uttar Pradesh",
+          "pin_code": "201301",
+          "locality": null,
+          "address": "noida"
+        },
+        "name": "KireetLab",
+        "mobile": null,
+        "address": null,
+        "message": null
+      },
+      "email": "n.898989898@email.com",
+      "role": "",
+      "permissions": null,
+      "mobile": "898989898",
+      "name": "nityananda",
+      "is_lab_owner": false,
+      "is_patient": true
+    },
+    "name": "nityananda",
+    "doctor": {
+      "uuid": "94cd5b5e-62c9-4478-91c4-c275b43a3f8f",
+      "name": "DoctorOne",
+      "commission": 50,
+      "labBranch": {
+        "uuid": "98af2baa-5e6b-4e03-9d26-e609d8b0b157",
+        "lab": {
+          "uuid": "1be9bbbc-565d-4be7-b870-1f72a3da3024",
+          "name": "KireetLab",
+          "email": "kireet@gmail.com",
+          "mobile": "89898989",
+          "city": null,
+          "state": "Uttar Pradesh",
+          "pin_code": "201301",
+          "locality": null,
+          "address": "noida"
+        },
+        "name": "KireetLab",
+        "mobile": null,
+        "address": null,
+        "message": null
+      },
+      "address": "myHome",
+      "email": "done@email.com",
+      "mobile": "87867575"
+    },
+    "gender": "male",
+    "dateOfBirth": "1999-06-19",
+    "age": 25,
+    "message": null,
+    "ageType": "years",
+    "created": "2024-06-19T22:49:46.620773+05:30"
+  },
+  "tests": [
+    {
+      "uuid": "48d06bb9-55cb-4c27-bfa5-702f39d0c9a6",
+      "labBranch": null,
+      "category": {
+        "uuid": "cc6f7f81-ce0b-4a27-90fc-c69d2db3f92d",
+        "name": "Urinalysis",
+        "is_active": true
+      },
+      "testName": "Urine Routine Examination",
+      "shortcut": "Urine Routine Examination",
+      "sampleType": "Urine",
+      "testPrice": 0,
+      "precautions": "Precaution Details:\n•⁠  ⁠Before Testing: Verify that all required PPE is in good condition and properly fitted.\n•⁠  ⁠During Testing: Consistently wear PPE and avoid touching your face, eyes, or mouth with gloved hands.\n•⁠  ⁠After Testing: Properly dispose of or decontaminate PPE as per laboratory protocols, and thoroughly wash hands after removing gloves.\n\nThis precaution helps minimize the risk of contamination, exposure to hazardous substances, and accidental injuries, thereby ensuring the safety of laboratory personnel and maintaining the integrity of test results.",
+      "testComponent": {
+        "testComponents": [
+          {
+            "name": "Quantity",
+            "type": "component",
+            "unit": "ml",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Colour",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Transparency",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Specific Gravity",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "pH",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Protein / Albumin",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Sugar / Glucose",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Ketone Bodies",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Bilirubin",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "R.B.C",
+            "type": "component",
+            "unit": "/HFP",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Pus Cells",
+            "type": "component",
+            "unit": "/HFP",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Epithilial Cells",
+            "type": "component",
+            "unit": "/HFP",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Casts",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Crystals",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Bacteria",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Nitrite",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Leukocytes",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          },
+          {
+            "name": "Blood",
+            "type": "component",
+            "unit": "",
+            "result": "text",
+            "status": true,
+            "separated": false,
+            "resultType": "text",
+            "selectOptions": [],
+            "selectedResult": ""
+          }
+        ]
+      },
+      "comments": []
+    }
+  ],
+  "packages": [],
+  "created": "2024-07-21T22:16:20.288546+05:30",
+  "doctorSignDigits": [
+    {
+      "doctorSign": "https://labops-backend.s3.amazonaws.com/media/labbranchmedia/2024-07-15_135350.4350890000.png",
+      "doctorName": "Debditya Mallick",
+      "doctorPostion": "MD Pathology"
+    },
+    {
+      "doctorSign": "",
+      "doctorName": "Rishikesh Ghosh",
+      "doctorPostion": "MD Pathology"
+    }
+  ],
+  "pdfTestInfo": "",
+  "header": {
+    "image": "https://labops-backend.s3.amazonaws.com/media/labbranchmedia/2024-07-22_105236.6868260000.png"
+  },
+  "footer": {
+    "image": "https://labops-backend.s3.ap-south-1.amazonaws.com/media/labbranchmedia/2024-07-24_182341.4493740000.png"
+  },
+  "marginTopPx": 0,
+  "marginBottomPx": 0
+}

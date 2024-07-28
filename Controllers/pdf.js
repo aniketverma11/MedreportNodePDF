@@ -1,11 +1,21 @@
 import puppeteer from "puppeteer";
-import { footer, pdf } from "../Utils/pdfTemplate.js"; // Import your HTML template function
-import { pdfTestInfo } from "../Utils/pdf.js";
+import { pdf } from "../Utils/pdfTemplate.js"; // Import your HTML template function
 
 const generatePdf = async (req, res) => {
   try {
+    const {
+      doctorSignDigits,
+      tests,
+      packages,
+      header,
+      footer,
+      marginTopPx,
+      marginBottomPx,
+    } = req.body;
     const obj = {};
     const extractAllTestsByCategory = (tests) => {
+      console.log(tests);
+      if (tests?.length === 0) return;
       for (let test of tests) {
         if (obj[test?.category?.name]?.length) {
           obj[test?.category?.name] = [...obj[test?.category?.name], test];
@@ -16,38 +26,20 @@ const generatePdf = async (req, res) => {
       return obj;
     };
 
-    extractAllTestsByCategory(pdfTestInfo?.data.packages[0].tests);
-    extractAllTestsByCategory(pdfTestInfo?.data.tests);
+    extractAllTestsByCategory(packages[0] || []);
+    extractAllTestsByCategory(tests || []);
 
     const pdfInfo = {
-      doctorSignDigits: [
-        {
-          doctorSign:
-            "https://labops-backend.s3.amazonaws.com/media/labbranchmedia/2024-07-15_135350.4350890000.png",
-          doctorName: "Debditya Mallick",
-          doctorPostion: "MD Pathology",
-        },
-        {
-          doctorSign: "",
-          doctorName: "Rishikesh Ghosh",
-          doctorPostion: "MD Pathology",
-        },
-      ],
-      header: {
-        image:
-          "https://labops-backend.s3.amazonaws.com/media/labbranchmedia/2024-07-22_105236.6868260000.png",
-      },
-      footer: {
-        image:
-          "https://labops-backend.s3.ap-south-1.amazonaws.com/media/labbranchmedia/2024-07-24_182341.4493740000.png",
-      },
-      marginTop: 0,
-      marginBottom: 0,
+      doctorSignDigits,
+      header,
+      footer,
+      marginTop: marginTopPx,
+      marginBottom: marginBottomPx,
       tests: Object.keys(obj).map((category) => ({
         category,
         tests: obj[category],
       })),
-      pdfAllInfo: pdfTestInfo?.data,
+      pdfAllInfo: req.body,
     };
 
     const calculateTableheight = (pdfInfo, marginTop, marginBottom) => {

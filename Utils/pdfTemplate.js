@@ -164,10 +164,16 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           <div class="headerInfoContainer">
             <div class="headerInfoContainerSection">
               <div class="headerInfoContainerBox">
-                <div>Name: ${pdfInfo?.pdfAllInfo?.patient_info?.name}</div>
-                <div>Gender: ${pdfInfo?.pdfAllInfo?.patient_info?.gender}</div>
-                <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age}</div>
-                <div>Phone: ${pdfInfo?.pdfAllInfo?.patient_info?.phone}</div>
+                <div>Name: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.name || ""
+                }</div>
+                <div>Gender: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.gender || ""
+                }</div>
+                <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age || ""}</div>
+                <div>Phone: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.phone || ""
+                }</div>
               </div>
             </div>
             <div class="hedaerInfoLineComp">
@@ -175,12 +181,16 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             </div>
             <div class="headerInfoContainerSection">
               <div class="headerInfoContainerBox">
-                <div>Patient ID: ${pdfInfo?.pdfAllInfo?.patient_info?.id}</div>
-                <div>Doctor: ${
-                  pdfInfo?.pdfAllInfo?.patient_info?.doctor?.name
+                <div>Patient ID: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.id || ""
                 }</div>
-                <div>Email ID:   ${pdfInfo?.pdfAllInfo?.patient?.email}</div>
-                <div>Date: ${pdfInfo?.pdfAllInfo?.date}</div>
+                <div>Doctor: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.doctor?.name || ""
+                }</div>
+                <div>Email ID:   ${
+                  pdfInfo?.pdfAllInfo?.patient?.email || ""
+                }</div>
+                <div>Date: ${pdfInfo?.pdfAllInfo?.date || ""}</div>
               </div>
             </div>
           </div>
@@ -190,10 +200,12 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           <div class="textContainerTexts">
            ${
              i == 0
-               ? ` <span class="bigText">${testInfo?.category?.name}</span>`
+               ? ` <span class="bigText">${
+                   testInfo?.category?.name || ""
+                 }</span>`
                : ""
            }
-            <span class="midText">${testInfo?.testName}</span>
+            <span class="midText">${testInfo?.testName || ""}</span>
           </div>
           <table>
             <tr >
@@ -241,8 +253,8 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
                : `<div style="height:6.3rem;"></div>`
            }
       
-       <span>${doc?.doctorName}</span>
-       <span>${doc?.doctorPostion}</span>
+       <span>${doc?.doctorName || ""}</span>
+       <span>${doc?.doctorPostion || ""}</span>
      </div>`
          )
          .join("")}
@@ -276,78 +288,3 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
 </html>`;
   return template;
 };
-
-export const footer = () => ` <html >
-<head>
-      <style>
-        body {
-          width: 100%;
-          height:30rem;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-        .container {
-          height: 100%;
-          width: 100%;
-          padding: 0.8rem 0rem;
-          page-break-after: always;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          position: relative;
-        }
-       
-       
-        
-        .signatureComponent {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          column-gap: 1.8rem;
-          
-        }
-        .signatureSection {
-          width: fit-content;
-          display: flex;
-          flex-direction: column;
-          align-items: start;
-          column-gap: 1.8rem;
-        }
-        img {
-          margin: 0;
-          padding: 0;
-          display: block;
-        }
-        .testInfoContainer {
-          width: 100%;
-        }
-      </style>
-    </head>
-    <body>
-      <container class="container">
-       
-        <div class="signatureComponent">
-          <div class="signatureSection">
-            <img
-              width="200px"
-              src="https://labops-backend.s3.amazonaws.com/media/labbranchmedia/2024-07-15_135350.4350890000.png"
-              alt=""
-            />
-            <span>Debditya Mallick</span>
-            <span>MD Pathology</span>
-          </div>
-          <div class="signatureSection">
-            <img
-              width="200px"
-              src="https://labops-backend.s3.amazonaws.com/media/labbranchmedia/2024-07-15_135350.4350890000.png"
-              alt=""
-            />
-            <span>Debditya Mallick</span>
-            <span>MD Pathology</span>
-          </div>
-        </div>
-      </container>
-      
-    </body>
-</html>`;
