@@ -8,7 +8,7 @@ const server = express();
 server.use(express.json());
 server.use(cors());
 
-server.use("/pdf", pdfRoute);
+server.use("/api/v1", pdfRoute);
 
 const PORT = process.env.PORT;
 

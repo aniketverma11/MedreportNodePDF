@@ -1,6 +1,17 @@
 import puppeteer from "puppeteer";
 import { pdf } from "../Utils/pdfTemplate.js"; // Import your HTML template function
 
+import AWS from 'aws-sdk';
+import { v4 as uuidv4 } from 'uuid';
+
+
+// Configure AWS SDK
+const s3 = new AWS.S3({
+  accessKeyId: "AKIATCKAQU7JXLBI4EQS", //process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: "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",//process.env.AWS_SECRET_ACCESS_KEY,
+  region: "ap-south-1"//process.env.AWS_REGION,
+});
+
 const generatePdf = async (req, res) => {
   try {
     const {
@@ -136,10 +147,25 @@ const generatePdf = async (req, res) => {
     });
 
     await browser.close();
+    
+    // Generate unique filename
+    const filename = `medical-pdfs/${uuidv4()}.pdf`
 
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", 'inline; filename="example.pdf"');
-    res.send(pdfBuffer);
+    // Upload to S3
+    const params = {
+      Bucket: "labops-backend", //process.env.S3_BUCKET_NAME,
+      Key: filename,
+      Body: pdfBuffer,
+      ContentType: 'application/pdf',
+      ACL: 'public-read', // Optional: make the file publicly readable
+    };
+
+    const uploadResult = await s3.upload(params).promise();
+    const fileUrl = uploadResult.Location;
+    res.status(200).json({ url: fileUrl });
+    // res.setHeader("Content-Type", "application/pdf");
+    // res.setHeader("Content-Disposition", 'inline; filename="example.pdf"');
+    // res.send(pdfBuffer);
   } catch (error) {
     console.error("Error generating PDF:", error);
     res.status(500).json({ error: "Error generating PDF" });
