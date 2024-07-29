@@ -126,7 +126,7 @@ const generatePdf = async (req, res) => {
       pdfInfo?.doctorSignDigits
     );
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({executablePath: '/usr/bin/chromium-browser'});
     const page = await browser.newPage();
     await page.setViewport({ width: 595, height: 842 });
     await page.setContent(htmlTemplate);
