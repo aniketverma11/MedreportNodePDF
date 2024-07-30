@@ -1,15 +1,14 @@
 import puppeteer from "puppeteer";
 import { pdf } from "../Utils/pdfTemplate.js"; // Import your HTML template function
 
-import AWS from 'aws-sdk';
-import { v4 as uuidv4 } from 'uuid';
-
+import AWS from "aws-sdk";
+import { v4 as uuidv4 } from "uuid";
 
 // Configure AWS SDK
 const s3 = new AWS.S3({
   accessKeyId: "AKIATCKAQU7JXLBI4EQS", //process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: "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",//process.env.AWS_SECRET_ACCESS_KEY,
-  region: "ap-south-1"//process.env.AWS_REGION,
+  secretAccessKey: "1ky1NUFfXhyHM8UFhJOEk54HOQi1E5fuYep91txS", //process.env.AWS_SECRET_ACCESS_KEY,
+  region: "ap-south-1", //process.env.AWS_REGION,
 });
 
 const generatePdf = async (req, res) => {
@@ -37,7 +36,10 @@ const generatePdf = async (req, res) => {
       return obj;
     };
 
-    extractAllTestsByCategory(packages[0] || []);
+    for (let i = 0; i < packages?.length; i++) {
+      extractAllTestsByCategory(packages[i] || []);
+    }
+
     extractAllTestsByCategory(tests || []);
 
     const pdfInfo = {
@@ -126,7 +128,9 @@ const generatePdf = async (req, res) => {
       pdfInfo?.doctorSignDigits
     );
 
-    const browser = await puppeteer.launch({executablePath: '/usr/bin/chromium-browser'});
+    const browser = await puppeteer.launch({
+      executablePath: "/usr/bin/chromium-browser",
+    });
     const page = await browser.newPage();
     await page.setViewport({ width: 595, height: 842 });
     await page.setContent(htmlTemplate);
@@ -147,17 +151,17 @@ const generatePdf = async (req, res) => {
     });
 
     await browser.close();
-    
+
     // Generate unique filename
-    const filename = `medical-pdfs/${uuidv4()}.pdf`
+    const filename = `medical-pdfs/${uuidv4()}.pdf`;
 
     // Upload to S3
     const params = {
       Bucket: "labops-backend", //process.env.S3_BUCKET_NAME,
       Key: filename,
       Body: pdfBuffer,
-      ContentType: 'application/pdf',
-      ACL: 'public-read', // Optional: make the file publicly readable
+      ContentType: "application/pdf",
+      ACL: "public-read", // Optional: make the file publicly readable
     };
 
     const uploadResult = await s3.upload(params).promise();
