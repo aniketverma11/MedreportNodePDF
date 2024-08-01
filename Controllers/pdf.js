@@ -24,10 +24,9 @@ const generatePdf = async (req, res) => {
     } = req.body;
     const obj = {};
 
-    console.log(packages)
     const extractAllTestsByCategory = (tests) => {
-      console.log(tests);
-      if (tests?.length === 0) return;
+      console.log("Extracting tests:", tests);
+      if (!Array.isArray(tests) || tests.length === 0) return;
       for (let test of tests) {
         if (obj[test?.category?.name]?.length) {
           obj[test?.category?.name] = [...obj[test?.category?.name], test];
@@ -38,13 +37,14 @@ const generatePdf = async (req, res) => {
       return obj;
     };
 
-    if (packages[0]?.uuid) {
+    if (Array.isArray(packages) && packages[0]?.uuid) {
       for (let i = 0; i < packages.length; i++) {
         if (packages[i]?.uuid) {
-          extractAllTestsByCategory(packages[i] || []);
+          extractAllTestsByCategory(packages[i].tests || []);
         }
       }
     }
+    
     extractAllTestsByCategory(tests || []);
 
     const pdfInfo = {
