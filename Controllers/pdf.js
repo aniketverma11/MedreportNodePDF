@@ -135,6 +135,18 @@ const generatePdf = async (req, res) => {
 
     const browser = await puppeteer.launch({
       executablePath: "/usr/bin/chromium-browser",
+      args: [
+        '--disable-gpu',
+        '--disable-dev-shm-usage',
+        '--disable-setuid-sandbox',
+        '--no-first-run',
+        '--no-sandbox',
+        '--no-zygote',
+        '--deterministic-fetch',
+        '--disable-features=IsolateOrigins',
+        '--disable-site-isolation-trials',
+        // '--single-process',
+    ]
     });
     const page = await browser.newPage();
     await page.setViewport({ width: 595, height: 842 });
