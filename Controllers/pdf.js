@@ -36,8 +36,15 @@ const generatePdf = async (req, res) => {
       return obj;
     };
 
+    // for (let i = 0; i < packages.length; i++) {
+    //   extractAllTestsByCategory(packages[i] || []);
+    // }
+
     for (let i = 0; i < packages.length; i++) {
-      extractAllTestsByCategory(packages[i] || []);
+      if (packages[i]?.uuid) {
+        extractAllTestsByCategory(packages[i] || []);
+      }
+  
     }
 
     extractAllTestsByCategory(tests || []);
