@@ -146,7 +146,8 @@ const generatePdf = async (req, res) => {
         '--disable-features=IsolateOrigins',
         '--disable-site-isolation-trials',
         // '--single-process',
-    ]
+    ],
+    timeout: 60000
     });
     const page = await browser.newPage();
     await page.setViewport({ width: 595, height: 842 });
