@@ -36,7 +36,7 @@ const generatePdf = async (req, res) => {
       return obj;
     };
 
-    for (let i = 0; i < packages?.length; i++) {
+    for (let i = 0; i < packages.length; i++) {
       extractAllTestsByCategory(packages[i] || []);
     }
 
