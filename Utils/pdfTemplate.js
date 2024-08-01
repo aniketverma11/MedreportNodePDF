@@ -210,7 +210,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           <table>
             <tr >
               <th>Test</th>
-              <th>Result</th>
+              <th> Selected Result</th>
               <th>Unit</th>
               <th>Normal Range</th>
             </tr>
@@ -218,11 +218,11 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             ${testInfo?.testComponent?.testComponents
               ?.map(
                 (val) => `<tr>
-            <td>${val?.name || "N/A"}</td>
-            <td>${val?.result || "N/A"}</td>
-            <td>${val?.unit || "N/A"}</td>
+            <td>${val?.name || ""}</td>
+            <td>${val?.result || ""}</td>
+            <td>${val?.unit || ""}</td>
             
-            <td>${val?.refRangeComment || "N/A"}</td>
+            <td>${val?.refRangeComment || ""}</td>
 
           </tr>`
               )
