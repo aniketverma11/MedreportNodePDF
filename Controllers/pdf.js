@@ -40,12 +40,12 @@ const generatePdf = async (req, res) => {
     //   extractAllTestsByCategory(packages[i] || []);
     // }
 
-    for (let i = 0; i < packages.length; i++) {
-      if (packages[i]?.uuid) {
-        extractAllTestsByCategory(packages[i] || []);
-      }
+    // for (let i = 0; i < packages.length; i++) {
+    //   if (packages[i]?.uuid) {
+    //     extractAllTestsByCategory(packages[i] || []);
+    //   }
   
-    }
+    // }
 
     extractAllTestsByCategory(tests || []);
 
