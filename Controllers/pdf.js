@@ -36,17 +36,13 @@ const generatePdf = async (req, res) => {
       return obj;
     };
 
-    // for (let i = 0; i < packages.length; i++) {
-    //   extractAllTestsByCategory(packages[i] || []);
-    // }
-
-    // for (let i = 0; i < packages.length; i++) {
-    //   if (packages[i]?.uuid) {
-    //     extractAllTestsByCategory(packages[i] || []);
-    //   }
-  
-    // }
-
+    if (packages[0]?.uuid) {
+      for (let i = 0; i < packages.length; i++) {
+        if (packages[i]?.uuid) {
+          extractAllTestsByCategory(packages[i] || []);
+        }
+      }
+    }
     extractAllTestsByCategory(tests || []);
 
     const pdfInfo = {
