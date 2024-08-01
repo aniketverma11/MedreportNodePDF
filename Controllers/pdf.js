@@ -16,13 +16,15 @@ const generatePdf = async (req, res) => {
     const {
       doctorSignDigits,
       tests,
-      packages,
+      packages =  [],
       header,
       footer,
       marginTopPx,
       marginBottomPx,
     } = req.body;
     const obj = {};
+
+    console.log(packages)
     const extractAllTestsByCategory = (tests) => {
       console.log(tests);
       if (tests?.length === 0) return;
