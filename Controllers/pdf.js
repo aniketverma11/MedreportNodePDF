@@ -145,8 +145,10 @@ const generatePdf = async (req, res) => {
         "--deterministic-fetch",
         "--disable-features=IsolateOrigins",
         "--disable-site-isolation-trials",
+        "--disabled-setupid-sandbox",
         // '--single-process',
       ],
+      ignoreDefaultArgs: ["--disable-extensions"],
       timeout: 60000,
     });
     const page = await browser.newPage();
