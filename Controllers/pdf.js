@@ -16,16 +16,17 @@ const generatePdf = async (req, res) => {
     const {
       doctorSignDigits,
       tests,
-      packages,
+      packages = [],
       header,
       footer,
       marginTopPx,
       marginBottomPx,
     } = req.body;
     const obj = {};
+
     const extractAllTestsByCategory = (tests) => {
-      console.log(tests);
       if (tests?.length === 0) return;
+
       for (let test of tests) {
         if (obj[test?.category?.name]?.length) {
           obj[test?.category?.name] = [...obj[test?.category?.name], test];
@@ -36,8 +37,12 @@ const generatePdf = async (req, res) => {
       return obj;
     };
 
-    for (let i = 0; i < packages?.length; i++) {
-      extractAllTestsByCategory(packages[i] || []);
+    if (packages[0]?.uuid) {
+      for (let i = 0; i < packages.length; i++) {
+        if (packages[i]?.uuid) {
+          extractAllTestsByCategory(packages[i] || []);
+        }
+      }
     }
 
     extractAllTestsByCategory(tests || []);
