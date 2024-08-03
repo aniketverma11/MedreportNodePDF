@@ -75,11 +75,12 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             text-align: left;
             padding :0.3rem 0;
             width: 10rem;
-            padding-left: 3rem;
+            padding-left: 1rem;
           }
           th {
             background-color: #D3EEFF;
             margin-bottom:1rem !important;
+            font-weight: 500;
             
           }
           .textContainer {
@@ -102,7 +103,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             width:100%;
             text-align: center;
             font-size: 1.6rem;
-            font-weight: 700;
+            font-weight: 500;
             margin-bottom: 0.7rem;
           }
           .midText {
@@ -210,7 +211,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           <table>
             <tr >
               <th>Test</th>
-              <th> Selected Result</th>
+              <th>Result</th>
               <th>Unit</th>
               <th>Normal Range</th>
             </tr>
@@ -219,7 +220,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
               ?.map(
                 (val) => `<tr>
             <td>${val?.name || ""}</td>
-            <td>${val?.result || ""}</td>
+            <td>${val?.selectedResult || ""}</td>
             <td>${val?.unit || ""}</td>
             
             <td>${val?.refRangeComment || ""}</td>
@@ -246,15 +247,15 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
              doc?.doctorSign
                ? ` <img
            width="100px"
-           height="99px"
+           height="80px"
            src="${doc?.doctorSign}"
            alt=""
          />`
-               : `<div style="height:6.3rem;"></div>`
+               : `<div style="height:5.5rem;"></div>`
            }
       
        <span>${doc?.doctorName || ""}</span>
-       <span>${doc?.doctorPostion || ""}</span>
+       <span>${doc?.doctorPosition || ""}</span>
      </div>`
          )
          .join("")}

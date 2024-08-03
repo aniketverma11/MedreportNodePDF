@@ -16,7 +16,7 @@ const generatePdf = async (req, res) => {
     const {
       doctorSignDigits,
       tests,
-      packages =  [],
+      packages = [],
       header,
       footer,
       marginTopPx,
@@ -44,7 +44,7 @@ const generatePdf = async (req, res) => {
         }
       }
     }
-    
+
     extractAllTestsByCategory(tests || []);
 
     const pdfInfo = {
