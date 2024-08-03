@@ -25,8 +25,8 @@ const generatePdf = async (req, res) => {
     const obj = {};
 
     const extractAllTestsByCategory = (tests) => {
-      if (tests?.length === 0) return;
-
+      console.log("Extracting tests:", tests);
+      if (!Array.isArray(tests) || tests.length === 0) return;
       for (let test of tests) {
         if (obj[test?.category?.name]?.length) {
           obj[test?.category?.name] = [...obj[test?.category?.name], test];
@@ -37,10 +37,10 @@ const generatePdf = async (req, res) => {
       return obj;
     };
 
-    if (packages[0]?.uuid) {
+    if (Array.isArray(packages) && packages[0]?.uuid) {
       for (let i = 0; i < packages.length; i++) {
         if (packages[i]?.uuid) {
-          extractAllTestsByCategory(packages[i] || []);
+          extractAllTestsByCategory(packages[i].tests || []);
         }
       }
     }
@@ -135,6 +135,19 @@ const generatePdf = async (req, res) => {
 
     const browser = await puppeteer.launch({
       executablePath: "/usr/bin/chromium-browser",
+      args: [
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
+        "--disable-setuid-sandbox",
+        "--no-first-run",
+        "--no-sandbox",
+        "--no-zygote",
+        "--deterministic-fetch",
+        "--disable-features=IsolateOrigins",
+        "--disable-site-isolation-trials",
+        // '--single-process',
+      ],
+      timeout: 60000,
     });
     const page = await browser.newPage();
     await page.setViewport({ width: 595, height: 842 });
