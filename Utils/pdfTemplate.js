@@ -97,7 +97,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.2rem;
           }
           .bigText {
             width:100%;
@@ -134,11 +134,11 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           }
           .textContainerMain {
             width: 100%;
-            padding: 1rem 0rem;
+            padding: 0.5rem 0rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            row-gap: 0.8rem;
+            row-gap: 0.4rem;
             
           }
         </style>
