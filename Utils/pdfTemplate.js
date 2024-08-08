@@ -24,7 +24,6 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           }
           .container {
             height:100%;
-            
             width: 100%;
             padding: 0.8rem 0rem;
             page-break-after: always;
@@ -46,6 +45,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           .headerInfoContainer {
             width: 100%;
             display: flex;
+            font-size: 1rem;
             border-bottom: 2px solid black;
             padding: 1rem 0;
           }
@@ -199,9 +199,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
                 <div>Doctor: ${
                   pdfInfo?.pdfAllInfo?.patient_info?.doctor?.name || ""
                 }</div>
-                <div>Email ID:   ${
-                  pdfInfo?.pdfAllInfo?.patient_info?.patient?.email || ""
-                }</div>
+                <div>Email ID:   ${""}</div>
                 <div>Date: ${formattedDate}</div>
               </div>
             </div>
