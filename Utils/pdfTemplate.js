@@ -1,5 +1,14 @@
 export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
-  console.log(doctor);
+  function formatDateToMMDDYYYY(date) {
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based, so we add 1
+    const day = String(date.getDate()).padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${month}-${day}-${year}`;
+  }
+
+  const currentDate = new Date();
+  const formattedDate = formatDateToMMDDYYYY(currentDate);
   const template = ` <html >
   <head>
         <style>
@@ -68,6 +77,9 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             width: 100%;
        
           }
+          td{
+            font-size :0.9rem;
+          }
 
           td,
           th {
@@ -89,7 +101,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            row-gap: 0.5rem;
+            row-gap: 0.8rem;
           }
           .textContainerTexts {
             width: 100%;
@@ -101,12 +113,12 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           .bigText {
             width:100%;
             text-align: center;
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 0.7rem;
           }
           .midText {
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 500;
           }
           .signatureComponent {
@@ -133,11 +145,11 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           }
           .textContainerMain {
             width: 100%;
-            padding: 1rem 0rem;
+            
             display: flex;
             flex-direction: column;
             align-items: center;
-            row-gap: 0.8rem;
+        
             
           }
         </style>
@@ -154,7 +166,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
               ? `<div class="headerImgContainer">
             <img
               width="850px"
-              height="200px"
+              height="160px"
               src="${pdfInfo?.header?.image}"
               alt="img"
             />
@@ -164,10 +176,16 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           <div class="headerInfoContainer">
             <div class="headerInfoContainerSection">
               <div class="headerInfoContainerBox">
-                <div>Name: ${pdfInfo?.pdfAllInfo?.patient_info?.name}</div>
-                <div>Gender: ${pdfInfo?.pdfAllInfo?.patient_info?.gender}</div>
-                <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age}</div>
-                <div>Phone: ${pdfInfo?.pdfAllInfo?.patient_info?.phone}</div>
+                <div>Name: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.name || ""
+                }</div>
+                <div>Gender: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.gender || ""
+                }</div>
+                <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age || ""}</div>
+                <div>Phone: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.patient.mobile || ""
+                }</div>
               </div>
             </div>
             <div class="hedaerInfoLineComp">
@@ -175,12 +193,16 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             </div>
             <div class="headerInfoContainerSection">
               <div class="headerInfoContainerBox">
-                <div>Patient ID: ${pdfInfo?.pdfAllInfo?.patient_info?.id}</div>
-                <div>Doctor: ${
-                  pdfInfo?.pdfAllInfo?.patient_info?.doctor?.name
+                <div>Patient ID: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.id || ""
                 }</div>
-                <div>Email ID:   ${pdfInfo?.pdfAllInfo?.patient?.email}</div>
-                <div>Date: ${pdfInfo?.pdfAllInfo?.date}</div>
+                <div>Doctor: ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.doctor?.name || ""
+                }</div>
+                <div>Email ID:   ${
+                  pdfInfo?.pdfAllInfo?.patient_info?.patient?.email || ""
+                }</div>
+                <div>Date: ${formattedDate}</div>
               </div>
             </div>
           </div>
@@ -190,10 +212,12 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           <div class="textContainerTexts">
            ${
              i == 0
-               ? ` <span class="bigText">${testInfo?.category?.name}</span>`
+               ? ` <span class="bigText">${
+                   testInfo?.category?.name || ""
+                 }</span>`
                : ""
            }
-            <span class="midText">${testInfo?.testName}</span>
+            <span class="midText">${testInfo?.testName || ""}</span>
           </div>
           <table>
             <tr >
@@ -206,11 +230,11 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             ${testInfo?.testComponent?.testComponents
               ?.map(
                 (val) => `<tr>
-            <td>${val?.name || "N/A"}</td>
-            <td>${val?.result || "N/A"}</td>
-            <td>${val?.unit || "N/A"}</td>
+            <td>${val?.name || ""}</td>
+            <td>${val?.selectedResult || ""}</td>
+            <td>${val?.unit || ""}</td>
             
-            <td>${val?.refRangeComment || "N/A"}</td>
+            <td>${val?.refRangeComment || ""}</td>
 
           </tr>`
               )
@@ -234,15 +258,15 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
              doc?.doctorSign
                ? ` <img
            width="100px"
-           height="99px"
+           height="80px"
            src="${doc?.doctorSign}"
            alt=""
          />`
                : `<div style="height:6.3rem;"></div>`
            }
       
-       <span>${doc?.doctorName}</span>
-       <span>${doc?.doctorPosition}</span>
+       <span>${doc?.doctorName || ""}</span>
+       <span>${doc?.doctorPosition || ""}</span>
      </div>`
          )
          .join("")}
@@ -253,7 +277,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             ? `<div class="footerImgContainer">
           <img
             width="850px"
-            height="60px"
+            height="50px"
             src="${pdfInfo?.footer?.image}"
             alt="img"
           />
