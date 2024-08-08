@@ -45,7 +45,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           .headerInfoContainer {
             width: 100%;
             display: flex;
-            font-size: 0.8rem;
+           
             border-bottom: 2px solid black;
             padding: 1rem 0;
           }
@@ -67,7 +67,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             width: fit-content;
             display: flex;
             flex-direction: column;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
             row-gap: 0.2rem;
           }
@@ -182,7 +182,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
                 <div>Gender: ${
                   pdfInfo?.pdfAllInfo?.patient_info?.gender || ""
                 }</div>
-                <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age || ""}" "${
+                <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age || ""} ${
              pdfInfo?.pdfAllInfo?.patient_info?.ageType || ""
            }</div>
                 <div>Phone: ${
