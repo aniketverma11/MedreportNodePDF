@@ -47,6 +47,161 @@ const generatePdf = async (req, res) => {
 
     extractAllTestsByCategory(tests || []);
 
+    const CBC = obj["Hematology"]?.find((test) => {
+      if (test?.testName === "Complete Blood Count (CBC)") return test;
+    });
+
+    if (CBC?.testName === "Complete Blood Count (CBC)") {
+      obj["Hematology"] = obj["Hematology"]?.filter(
+        (test) => test?.testName !== CBC?.testName
+      );
+    }
+
+    function processTestComponents(obj, maxTablesPerCategory = 15) {
+      let processedData = {};
+
+      // Step 1: Calculate total tables in each category
+      for (let cat in obj) {
+        const totalTables = calculateTotalTables(obj[cat]);
+
+        // Step 2: Determine if splitting is necessary
+        if (totalTables > maxTablesPerCategory) {
+          const numNewCategories = Math.ceil(
+            totalTables / maxTablesPerCategory
+          );
+
+          // Initialize processedData entry for the current category
+          processedData[cat] = 0;
+
+          // Create new categories and initialize them
+          initializeNewCategories(obj, processedData, cat, numNewCategories);
+
+          // Distribute components across new categories prioritizing smaller objects
+          distributeComponents(obj, processedData, cat, maxTablesPerCategory);
+
+          // Adjust maxTablesPerCategory for this specific category
+          adjustMaxTablesPerCategory(
+            obj,
+            cat,
+            totalTables,
+            maxTablesPerCategory
+          );
+        }
+      }
+
+      return processedData;
+    }
+
+    function calculateTotalTables(category) {
+      return category.reduce((acc, val) => {
+        return acc + (val?.testComponent?.testComponents?.length || 0);
+      }, 0);
+    }
+
+    function initializeNewCategories(
+      obj,
+      processedData,
+      cat,
+      numNewCategories
+    ) {
+      for (let i = 2; i <= numNewCategories; i++) {
+        let newCategoryKey = `${cat}-${i}`;
+        processedData[newCategoryKey] = 0;
+        obj[newCategoryKey] = []; // Initialize as an empty array
+      }
+    }
+
+    function distributeComponents(
+      obj,
+      processedData,
+      cat,
+      maxTablesPerCategory
+    ) {
+      let currentCategoryIndex = 1;
+      let currentTableCount = 0;
+
+      // Sort objects within the category based on testComponent.testComponents length in ascending order
+      obj[cat].sort(
+        (a, b) =>
+          (a.testComponent?.testComponents?.length || 0) -
+          (b.testComponent?.testComponents?.length || 0)
+      );
+
+      for (let originalObj of obj[cat]) {
+        let currentComponents = originalObj.testComponent?.testComponents || [];
+
+        while (currentComponents.length > 0) {
+          let newCategoryKey = `${cat}-${currentCategoryIndex}`;
+          if (currentTableCount >= maxTablesPerCategory) {
+            currentTableCount = 0;
+            currentCategoryIndex++;
+            newCategoryKey = `${cat}-${currentCategoryIndex}`;
+          }
+
+          if (!obj[newCategoryKey]) {
+            obj[newCategoryKey] = [];
+          }
+
+          let componentsToMove = currentComponents.splice(
+            0,
+            maxTablesPerCategory - currentTableCount
+          );
+          obj[newCategoryKey].push({
+            ...originalObj,
+            testComponent: { testComponents: componentsToMove },
+          });
+          processedData[newCategoryKey]++;
+          currentTableCount += componentsToMove.length;
+        }
+      }
+
+      // Remove original category if all components are moved
+      if (
+        obj[cat].every(
+          (item) =>
+            !item.testComponent?.testComponents ||
+            item.testComponent.testComponents.length === 0
+        )
+      ) {
+        delete obj[cat];
+      }
+    }
+
+    function adjustMaxTablesPerCategory(
+      obj,
+      cat,
+      totalTables,
+      maxTablesPerCategory
+    ) {
+      if (totalTables > 3 * maxTablesPerCategory) {
+        maxTablesPerCategory = Math.ceil(totalTables / 3);
+      }
+    }
+
+    let remainingTables2 = header?.image ? 20 : 15;
+
+    if (marginBottom && marginTop) {
+      let availablePixels2 = marginBottom + marginTop;
+      remainingTables2 = getRemainingTablesAfterExtraction(availablePixels2);
+    } else if (marginBottom) {
+      remainingTables2 = getRemainingTablesAfterExtraction(marginBottom);
+    } else if (marginTop) {
+      remainingTables2 = getRemainingTablesAfterExtraction(marginTop);
+    }
+
+    processTestComponents(
+      obj,
+      remainingTables2 === 0 && header?.image ? 20 : 15
+    );
+
+    if (CBC?.testName === "Complete Blood Count (CBC)") {
+      if (obj["Hematology"]?.length === 0) {
+        obj["Hematology"] = [{ ...CBC }];
+      } else {
+        obj["Hematology--1"] = [{ ...CBC }];
+      }
+    }
+
     const pdfInfo = {
       doctorSignDigits,
       header,
@@ -82,7 +237,7 @@ const generatePdf = async (req, res) => {
       ) {
         return `${44.5 - marginTop}rem;`;
       } else if (pdfInfo?.header?.image && pdfInfo?.footer?.image) {
-        return `${44.5}rem;`;
+        return `${49.5}rem;`;
       } else if (pdfInfo?.header?.image && marginTop && marginBottom) {
         console.log("helllo");
         return `${50.5 - (marginTop + marginBottom)}rem;`;
@@ -99,7 +254,7 @@ const generatePdf = async (req, res) => {
       } else if (pdfInfo?.header?.image) {
         return `${50}rem;`;
       } else if (pdfInfo?.footer?.image) {
-        return `${57}rem;`;
+        return `${59}rem;`;
       } else if (marginTop && marginBottom) {
         return `${57 - (marginTop + marginBottom)}rem;`;
       } else if (marginTop) {
@@ -108,7 +263,7 @@ const generatePdf = async (req, res) => {
         console.log("helllo");
         return `${50 - marginBottom}rem;`;
       } else {
-        return "50rem";
+        return "52rem";
       }
     };
 
@@ -117,13 +272,13 @@ const generatePdf = async (req, res) => {
       return Math.round(remValue);
     }
 
-    const baseFontSize = 16;
+    const baseFontSize = header?.image ? 20 : 15;
 
     const marginTop = pixelsToRem(pdfInfo?.marginTop || 0, baseFontSize);
     const marginBottom = pixelsToRem(pdfInfo?.marginBottom || 0, baseFontSize);
 
     let tableHeight = calculateTableheight(pdfInfo, marginTop, marginBottom);
-    console.log(pdfInfo?.doctorSignDigits);
+    // console.log(pdfInfo?.doctorSignDigits);
 
     const htmlTemplate = pdf(
       pdfInfo,

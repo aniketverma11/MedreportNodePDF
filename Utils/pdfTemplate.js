@@ -1,5 +1,14 @@
 export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
-  console.log(doctor);
+  function formatDateToMMDDYYYY(date) {
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based, so we add 1
+    const day = String(date.getDate()).padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${month}-${day}-${year}`;
+  }
+
+  const currentDate = new Date();
+  const formattedDate = formatDateToMMDDYYYY(currentDate);
   const template = ` <html >
   <head>
         <style>
@@ -68,6 +77,9 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             width: 100%;
        
           }
+          td{
+            font-size :0.9rem;
+          }
 
           td,
           th {
@@ -80,7 +92,6 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           th {
             background-color: #D3EEFF;
             margin-bottom:1rem !important;
-            font-weight: 500;
             
           }
           .textContainer {
@@ -102,12 +113,12 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           .bigText {
             width:100%;
             text-align: center;
-            font-size: 1.6rem;
-            font-weight: 500;
+            font-size: 1.2rem;
+            font-weight: 700;
             margin-bottom: 0.7rem;
           }
           .midText {
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 500;
           }
           .signatureComponent {
@@ -134,11 +145,11 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
           }
           .textContainerMain {
             width: 100%;
-            padding: 0.5rem 0rem;
+            
             display: flex;
             flex-direction: column;
             align-items: center;
-            row-gap: 0.4rem;
+        
             
           }
         </style>
@@ -155,7 +166,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
               ? `<div class="headerImgContainer">
             <img
               width="850px"
-              height="200px"
+              height="160px"
               src="${pdfInfo?.header?.image}"
               alt="img"
             />
@@ -173,7 +184,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
                 }</div>
                 <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age || ""}</div>
                 <div>Phone: ${
-                  pdfInfo?.pdfAllInfo?.patient_info?.phone || ""
+                  pdfInfo?.pdfAllInfo?.patient_info?.patient.mobile || ""
                 }</div>
               </div>
             </div>
@@ -189,9 +200,9 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
                   pdfInfo?.pdfAllInfo?.patient_info?.doctor?.name || ""
                 }</div>
                 <div>Email ID:   ${
-                  pdfInfo?.pdfAllInfo?.patient?.email || ""
+                  pdfInfo?.pdfAllInfo?.patient_info?.patient?.email || ""
                 }</div>
-                <div>Date: ${pdfInfo?.pdfAllInfo?.date || ""}</div>
+                <div>Date: ${formattedDate}</div>
               </div>
             </div>
           </div>
@@ -251,7 +262,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
            src="${doc?.doctorSign}"
            alt=""
          />`
-               : `<div style="height:5.5rem;"></div>`
+               : `<div style="height:6.3rem;"></div>`
            }
       
        <span>${doc?.doctorName || ""}</span>
@@ -266,7 +277,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
             ? `<div class="footerImgContainer">
           <img
             width="850px"
-            height="60px"
+            height="50px"
             src="${pdfInfo?.footer?.image}"
             alt="img"
           />
@@ -289,3 +300,78 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
 </html>`;
   return template;
 };
+
+export const footer = () => ` <html >
+<head>
+      <style>
+        body {
+          width: 100%;
+          height:30rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .container {
+          height: 100%;
+          width: 100%;
+          padding: 0.8rem 0rem;
+          page-break-after: always;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+        }
+       
+       
+        
+        .signatureComponent {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          column-gap: 1.8rem;
+          
+        }
+        .signatureSection {
+          width: fit-content;
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+          column-gap: 1.8rem;
+        }
+        img {
+          margin: 0;
+          padding: 0;
+          display: block;
+        }
+        .testInfoContainer {
+          width: 100%;
+        }
+      </style>
+    </head>
+    <body>
+      <container class="container">
+       
+        <div class="signatureComponent">
+          <div class="signatureSection">
+            <img
+              width="200px"
+              src="https://labops-backend.s3.amazonaws.com/media/labbranchmedia/2024-07-15_135350.4350890000.png"
+              alt=""
+            />
+            <span>Debditya Mallick</span>
+            <span>MD Pathology</span>
+          </div>
+          <div class="signatureSection">
+            <img
+              width="200px"
+              src="https://labops-backend.s3.amazonaws.com/media/labbranchmedia/2024-07-15_135350.4350890000.png"
+              alt=""
+            />
+            <span>Debditya Mallick</span>
+            <span>MD Pathology</span>
+          </div>
+        </div>
+      </container>
+      
+    </body>
+</html>`;
