@@ -180,13 +180,13 @@ const generatePdf = async (req, res) => {
 
     let remainingTables2 = header?.image ? 20 : 15;
 
-    if (marginBottom && marginTop) {
-      let availablePixels2 = marginBottom + marginTop;
+    if (marginBottomPx && marginTopPx) {
+      let availablePixels2 = marginBottomPx + marginTopPx;
       remainingTables2 = getRemainingTablesAfterExtraction(availablePixels2);
-    } else if (marginBottom) {
-      remainingTables2 = getRemainingTablesAfterExtraction(marginBottom);
-    } else if (marginTop) {
-      remainingTables2 = getRemainingTablesAfterExtraction(marginTop);
+    } else if (marginBottomPx) {
+      remainingTables2 = getRemainingTablesAfterExtraction(marginBottomPx);
+    } else if (marginTopPx) {
+      remainingTables2 = getRemainingTablesAfterExtraction(marginTopPx);
     }
 
     processTestComponents(
