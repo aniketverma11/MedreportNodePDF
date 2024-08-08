@@ -178,6 +178,22 @@ const generatePdf = async (req, res) => {
       }
     }
 
+    function getRemainingTablesAfterExtraction(pixels) {
+      const pixelsPerTable = 20;
+      const defaultMaxTablesPerCategory = 15;
+
+      // Calculate the number of tables that can fit in the given pixels
+      const calculatedTables = Math.floor(pixels / pixelsPerTable);
+
+      // Determine the remaining tables after accounting for the calculated tables
+      const remainingTables = Math.max(
+        defaultMaxTablesPerCategory - calculatedTables,
+        0
+      );
+
+      return remainingTables;
+    }
+
     let remainingTables2 = header?.image ? 20 : 15;
 
     if (marginBottomPx && marginTopPx) {
