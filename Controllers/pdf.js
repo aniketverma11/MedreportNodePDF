@@ -48,10 +48,17 @@ const generatePdf = async (req, res) => {
     extractAllTestsByCategory(tests || []);
 
     const CBC = obj["Hematology"]?.find((test) => {
-      if (test?.testName === "Complete Blood Count (CBC)") return test;
+      if (
+        test?.testName === "Complete Blood Count (CBC)" ||
+        test?.testName === "Complete Blood Count"
+      )
+        return test;
     });
 
-    if (CBC?.testName === "Complete Blood Count (CBC)") {
+    if (
+      CBC?.testName === "Complete Blood Count (CBC)" ||
+      CBC?.testName === "Complete Blood Count"
+    ) {
       obj["Hematology"] = obj["Hematology"]?.filter(
         (test) => test?.testName !== CBC?.testName
       );
@@ -210,7 +217,10 @@ const generatePdf = async (req, res) => {
       remainingTables2 === 0 && header?.image ? 20 : 15
     );
 
-    if (CBC?.testName === "Complete Blood Count (CBC)") {
+    if (
+      CBC?.testName === "Complete Blood Count (CBC)" ||
+      CBC?.testName === "Complete Blood Count"
+    ) {
       if (obj["Hematology"]?.length === 0) {
         obj["Hematology"] = [{ ...CBC }];
       } else {
