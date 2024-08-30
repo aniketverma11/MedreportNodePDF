@@ -182,7 +182,7 @@ export const pdf = (pdfInfo, tableHeight, marginTop, marginBottom, doctor) => {
                 <div>Gender: ${
                   pdfInfo?.pdfAllInfo?.patient_info?.gender || ""
                 }</div>
-                <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age || ""} ${
+                <div>Age: ${pdfInfo?.pdfAllInfo?.patient_info?.age || ""}   ${
              pdfInfo?.pdfAllInfo?.patient_info?.ageType || ""
            }</div>
                 <div>Phone: ${
