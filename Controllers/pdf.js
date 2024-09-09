@@ -6,9 +6,9 @@ import { v4 as uuidv4 } from "uuid";
 
 // Configure AWS SDK
 const s3 = new AWS.S3({
-  accessKeyId: "AKIATCKAQU7JXLBI4EQS", //process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: "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", //process.env.AWS_SECRET_ACCESS_KEY,
-  region: "ap-south-1", //process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
 });
 
 const generatePdf = async (req, res) => {
